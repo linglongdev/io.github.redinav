@@ -1,0 +1,36 @@
+version: "1"
+
+package:
+  id: io.github.redinav
+  name: redinav
+  version: 1.0.24.1
+  kind: app
+  description: |
+    RediNav is a GUI management tool for Redis
+
+command:
+  - /opt/apps/io.github.redinav/files/bin/redinav
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/IOsetting/redinav.git
+    version: master
+    commit: 2b3cd9249b26a55abd8368b97002cc583135beb6
+  - kind: file
+    url: http://security.debian.org/debian-security/pool/updates/main/libs/libssh2/libssh2-1_1.8.0-2.1+deb10u1_amd64.deb
+    digest: 0c683f061d346aa40f0e1b298b3d7f2c3ebeedbb258cf37a012b062520269585
+  - kind: file
+    url: http://security.debian.org/debian-security/pool/updates/main/libs/libssh2/libssh2-1-dev_1.8.0-2.1+deb10u1_amd64.deb
+    digest: 2ea8ea2aba9e941f43f67ade855820cec20e5724f05c39ebfac03170e0aff7a5
+
+build: |
+  bash ./install_dep linglong/sources $PREFIX
+
+  cd /project/linglong/sources/redinav.git
+  git apply ../../../0001-install.patch
+  qmake -makefile PREFIX=${PREFIX} LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
+  make -j$(nproc)
+  make install

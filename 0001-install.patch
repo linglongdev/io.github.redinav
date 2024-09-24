@@ -1,0 +1,60 @@
+From 4a9de26ab0025ad3dd7b429f40aec81d8d634700 Mon Sep 17 00:00:00 2001
+From: wjyrich <1071633242@qq.com>
+Date: Tue, 17 Sep 2024 14:29:37 +0800
+Subject: [PATCH] install
+
+---
+ redinav/redinav.pro               | 12 ++++++++----
+ redinav/resources/redinav.desktop | 11 +++++++++++
+ 2 files changed, 19 insertions(+), 4 deletions(-)
+ create mode 100644 redinav/resources/redinav.desktop
+
+diff --git a/redinav/redinav.pro b/redinav/redinav.pro
+index 4fb1c57..40cd018 100644
+--- a/redinav/redinav.pro
++++ b/redinav/redinav.pro
+@@ -184,15 +184,19 @@ unix:!macx { # ubuntu & debian
+     }
+ 
+     # Deployment
+-    target.path = /usr/share/redinav/bin
+-    target.files = $$DESTDIR/$$TARGET $$PWD/resources/qt.conf $$PWD/resources/images/redinav.png $$PWD/resources/redinav.sh
++    target.path = $$PREFIX/bin
++    #target.files = $$DESTDIR/$$TARGET $$PWD/resources/qt.conf  $$PWD/resources/redinav.sh
+     INSTALLS += target
+ 
+-    data.path = /usr/share/redinav/lib
++    data.path = $$PREFIX/lib
+     data.files = $$PWD/lib/*
+     INSTALLS += data
+ 
+-    deskicon.path = /usr/share/applications
++    icon.path = $$PREFIX/share/icons/hicolor/apps/
++    icon.files = $$PWD/resources/images/redinav.png
++    INSTALLS += icon
++
++    deskicon.path = $$PREFIX/share/applications
+     deskicon.files =  $$PWD/resources/redinav.desktop
+     INSTALLS += deskicon
+ }
+diff --git a/redinav/resources/redinav.desktop b/redinav/resources/redinav.desktop
+new file mode 100644
+index 0000000..ef11e1c
+--- /dev/null
++++ b/redinav/resources/redinav.desktop
+@@ -0,0 +1,11 @@
++[Desktop Entry]
++Categories=Accessibility;Qt;Utility;
++Exec=redinav
++Name=redinav
++Name[zh_CN]=redinav
++Icon=redinav
++StartupNotify=false
++Terminal=false
++Type=Application
++GenericName=redinav
++Version=1.0
+\ No newline at end of file
+-- 
+2.43.4
+
